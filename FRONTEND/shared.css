@@ -1,0 +1,157 @@
+/* Shared background for both pages */
+body {
+  background: url('Background_login.jpg') no-repeat center center fixed;
+  background-size: cover; /* Ensures the entire image is visible */
+  background-position: center;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease, background-image 0.3s ease;
+}
+
+/* Translucent container for forms in light mode */
+.container {
+  background: rgba(255, 255, 255, 0.25); /* Light mode: 70% opacity */
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.container:hover {
+  background: rgba(255, 255, 255, 0.7); /* Increase opacity to 90% on hover */
+}
+
+/* Title */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Input Fields */
+input {
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border 0.2s;
+}
+
+input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Button */
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Error Message */
+.error {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background: url('Background_login2.jpg') no-repeat center center fixed;
+  background-size: cover; /* Ensures the entire image is visible */
+  background-position: center;
+  color: #e0e0e0;
+}
+
+body.dark-mode .container {
+  background-color: rgba(70, 70, 70, 0.5); /* Dark mode: 80% opacity */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+body.dark-mode .container:hover {
+  background-color: rgba(70, 70, 70, 1); /* Increase opacity to 100% on hover */
+}
+
+body.dark-mode input {
+  background-color: #5d5c5c;
+  border-color: #555;
+  color: #fffbfb;
+}
+
+body.dark-mode input:focus {
+  border-color: #ff9800;
+}
+
+body.dark-mode button {
+  background-color: #ff9800;
+}
+
+body.dark-mode button:hover {
+  background-color: #ff5722;
+}
+
+body.dark-mode h2 {
+  color: #ff9800;
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 36px; /* Increased size for better visibility */
+  color: #007bff; /* Bright blue for light mode */
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(1.2); /* Slight zoom effect on hover */
+}
+
+body.dark-mode .dark-mode-toggle {
+  color: #ff9800; /* Bright orange for dark mode */
+}
+
+/* Style for the 'Not signed up?' link */
+.signup-link {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.signup-link a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
