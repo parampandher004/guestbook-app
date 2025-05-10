@@ -1,6 +1,7 @@
 /* Shared background for both pages */
 body {
-  background: url('Background_login.jpg') no-repeat center center fixed;
+  background: url("../images/background-login.jpg") no-repeat center center
+    fixed;
   background-size: cover; /* Ensures the entire image is visible */
   background-position: center;
   margin: 0;
@@ -9,7 +10,8 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease, background-image 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    background-image 0.3s ease;
 }
 
 /* Translucent container for forms in light mode */
@@ -81,7 +83,8 @@ button:hover {
 
 /* Dark Mode Styles */
 body.dark-mode {
-  background: url('Background_login2.jpg') no-repeat center center fixed;
+  background: url("../images/background-login-dark.jpg") no-repeat center center
+    fixed;
   background-size: cover; /* Ensures the entire image is visible */
   background-position: center;
   color: #e0e0e0;
