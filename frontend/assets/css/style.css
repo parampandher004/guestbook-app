@@ -57,6 +57,16 @@ input:focus {
   outline: none;
 }
 
+/* Placeholder Styling */
+input::placeholder {
+  color: #aaa; /* Light mode placeholder color */
+  transition: color 0.3s ease;
+}
+
+body.dark-mode input::placeholder {
+  color: #e0e0e0; /* Dark mode placeholder color */
+}
+
 /* Button */
 button {
   background-color: #007bff;
