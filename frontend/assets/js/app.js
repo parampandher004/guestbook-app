@@ -1,5 +1,8 @@
 const app = document.getElementById("app");
 
+// Simulate a logged-in state (replace this with your actual authentication logic)
+const loggedIn = localStorage.getItem("loggedIn") === "true";
+
 page("/frontend", () => {
   app.innerHTML = "<h2>Home</h2><p>Welcome to the homepage.</p>";
 });
@@ -24,8 +27,13 @@ page("/frontend/contact", () => {
   app.innerHTML = "<h2>Contact</h2><p>Reach out via email or phone.</p>";
 });
 
-page("/profile", () => {
-  app.innerHTML = "<h2>Profile</h2><p>View and edit your profile.</p>";
+// Profile route - redirect to login if not logged in
+page("/frontend/profile", () => {
+  if (loggedIn) {
+    loadPage("pages/profile.html");
+  } else {
+    page.redirect("/frontend/login"); // Redirect to login page
+  }
 });
 
 page();
