@@ -1,29 +1,3 @@
-function toggleDarkMode() {
-  document.body.classList.toggle("dark-mode");
-  const darkModeStatus = document.body.classList.contains("dark-mode");
-  console.log("Dark mode status:", darkModeStatus); // Debugging
-  localStorage.setItem("darkMode", darkModeStatus); // Persist dark mode setting
-  updateIcon(darkModeStatus);
-}
-
-function updateIcon(isDarkMode) {
-  const icon = document.getElementById("darkModeIcon");
-  if (isDarkMode) {
-    icon.textContent = "🌙"; // Moon emoji
-  } else {
-    icon.textContent = "🌞"; // Sun emoji
-  }
-}
-
-window.onload = function () {
-  const darkMode = localStorage.getItem("darkMode") === "true";
-  console.log("Dark mode on load:", darkMode); // Debugging
-  if (darkMode) {
-    document.body.classList.add("dark-mode");
-    updateIcon(true);
-  }
-};
-
 function validateSignup() {
   const email = document.querySelector('[name="email"]').value;
   const dob = document.querySelector('[name="dob"]').value;
@@ -41,7 +15,10 @@ function validateSignup() {
   let age = today.getFullYear() - birthDate.getFullYear();
   const monthDifference = today.getMonth() - birthDate.getMonth();
 
-  if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
+  ) {
     age--;
   }
 

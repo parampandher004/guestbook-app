@@ -1,17 +1,13 @@
 /* Shared background for both pages */
 body {
-  background: url("../images/background-login.jpg") no-repeat center center
-    fixed;
-  background-size: cover; /* Ensures the entire image is visible */
-  background-position: center;
+  background: #f0f0f0; /* Light mode: solid background color */
   margin: 0;
   font-family: Arial, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease,
-    background-image 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Translucent container for forms in light mode */
@@ -93,10 +89,7 @@ button:hover {
 
 /* Dark Mode Styles */
 body.dark-mode {
-  background: url("../images/background-login-dark.jpg") no-repeat center center
-    fixed;
-  background-size: cover; /* Ensures the entire image is visible */
-  background-position: center;
+  background: #222; /* Dark mode: solid background color */
   color: #e0e0e0;
 }
 
@@ -167,4 +160,61 @@ body.dark-mode .dark-mode-toggle {
 
 .signup-link a:hover {
   text-decoration: underline;
+}
+
+/* Navbar Styles */
+header nav {
+  background-color: #333; /* Solid background color */
+  max-width: 1000px; /* Set a max width for nav */
+  margin: 0 auto; /* Center the nav container horizontally */
+}
+
+header nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* Center the navigation items */
+}
+
+header nav ul li {
+  margin: 0 10px; /* Optional: adjust spacing between items */
+}
+
+header nav ul li a {
+  display: block;
+  padding: 14px 20px;
+  color: #fff;
+  text-decoration: none;
+}
+
+header nav ul li a:hover {
+  background-color: #444; /* Darker shade on hover */
+}
+
+/* Fixed Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333; /* consistent navbar background */
+  z-index: 1000;
+}
+
+/* Main Content Margin Adjustment */
+main {
+  margin-top: 60px; /* adjust based on header height */
+}
+
+/* Fixed Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
 }
