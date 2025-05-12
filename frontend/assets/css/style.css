@@ -1,6 +1,21 @@
-/* Shared background for both pages */
+/* Base colours (light mode)*/
+:root {
+  --color-bg: #f0f0f0;
+  --color-text: #000000;
+  --color-primary: #1a73e8;
+  --color-border: #e0e0e0;
+}
+
+/* Dark mode colours */
+.dark-mode {
+  --color-bg: #121212;
+  --color-text: #ffffff;
+  --color-primary: #8ab4f8;
+  --color-border: #2c2c2c;
+}
+
 body {
-  background: #f0f0f0; /* Light mode: solid background color */
+  background: var(--color-bg);
   margin: 0;
   font-family: Arial, sans-serif;
   display: flex;
