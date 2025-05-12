@@ -79,11 +79,7 @@
     }
 }
     else{
-         echo "<script>
-                alert('User already registered. Login Please!');
-                window.location.href = '/frontend/pages/signup.html';
-            </script>";
-        exit();
+        header("Location: /frontend/pages/login.html");
     }
     $stmt->close();
     $check->close();

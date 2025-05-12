@@ -1,10 +1,10 @@
 const app = document.getElementById("app");
 
 // Simulate a logged-in state (replace this with your actual authentication logic)
-const loggedIn = "true";
+const loggedIn = localStorage.getItem("loggedIn") === "true";
 
 page("/frontend", () => {
-  loadPage("pages/home.html");
+  app.innerHTML = "<h2>Home</h2><p>Welcome to the homepage.</p>";
 });
 
 page("/frontend/login", () => {
@@ -46,13 +46,6 @@ function loadPage(url) {
     })
     .then((html) => {
       document.getElementById("app").innerHTML = html;
-      // If the loaded page contains the guestbook container, run showGuestbookEntries.
-      if (
-        document.getElementById("guestbookentries") &&
-        typeof showGuestbookEntries === "function"
-      ) {
-        showGuestbookEntries();
-      }
     })
     .catch((err) => {
       document.getElementById("app").innerHTML =
