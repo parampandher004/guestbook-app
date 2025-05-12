@@ -178,12 +178,12 @@ header nav ul {
 }
 
 header nav ul li {
-  margin: 0 10px; /* Optional: adjust spacing between items */
+  margin: 0 20px; /* Optional: adjust spacing between items */
 }
 
 header nav ul li a {
   display: block;
-  padding: 14px 20px;
+  padding: 20px 25px;
   color: #fff;
   text-decoration: none;
 }
@@ -202,11 +202,6 @@ header {
   z-index: 1000;
 }
 
-/* Main Content Margin Adjustment */
-main {
-  margin-top: 60px; /* adjust based on header height */
-}
-
 /* Fixed Footer */
 footer {
   position: fixed;
@@ -217,4 +212,43 @@ footer {
   color: #fff;
   text-align: center;
   padding: 10px 0;
+}
+
+/* Updated search-bar to center horizontally at the top */
+.search-bar {
+  position: sticky;
+  width: 100%;
+  top: 60px;
+  left: 50%;
+  background: #222;
+  padding: 10px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Optional: Adjust spacing in the content area so it doesn't get hidden behind the sticky header */
+.content {
+  margin-top: 60px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-input {
+  width: 400px; /* Set a fixed width for the search input */
+  padding: 10px;
+  border-radius: 20px;
+  margin-right: 10px; /* Space between input and button */
+  margin-bottom: 0;
+}
+
+/* Page Container */
+.page-container {
+  width: 100%; /* Fill the entire width */
+  height: 100vh;
+  padding: 20px;
+  top: 50px;
 }
