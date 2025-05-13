@@ -1,21 +1,6 @@
-/* Base colours (light mode)*/
-:root {
-  --color-bg: #f0f0f0;
-  --color-text: #000000;
-  --color-primary: #1a73e8;
-  --color-border: #e0e0e0;
-}
-
-/* Dark mode colours */
-.dark-mode {
-  --color-bg: #121212;
-  --color-text: #ffffff;
-  --color-primary: #8ab4f8;
-  --color-border: #2c2c2c;
-}
-
+/* Shared background for both pages */
 body {
-  background: var(--color-bg);
+  background: #f0f0f0; /* Light mode: solid background color */
   margin: 0;
   font-family: Arial, sans-serif;
   display: flex;
@@ -193,12 +178,12 @@ header nav ul {
 }
 
 header nav ul li {
-  margin: 0 20px; /* Optional: adjust spacing between items */
+  margin: 0 10px; /* Optional: adjust spacing between items */
 }
 
 header nav ul li a {
   display: block;
-  padding: 20px 25px;
+  padding: 14px 20px;
   color: #fff;
   text-decoration: none;
 }
@@ -215,6 +200,11 @@ header {
   width: 100%;
   background-color: #333; /* consistent navbar background */
   z-index: 1000;
+}
+
+/* Main Content Margin Adjustment */
+main {
+  margin-top: 60px; /* adjust based on header height */
 }
 
 /* Fixed Footer */
