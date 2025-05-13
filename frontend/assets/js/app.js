@@ -20,11 +20,11 @@ page("/frontend/guestbook", () => {
 });
 
 page("/frontend/about", () => {
-  app.innerHTML = "<h2>About</h2><p>Learn more about us.</p>";
+  loadPage("pages/about.html");
 });
 
 page("/frontend/contact", () => {
-  app.innerHTML = "<h2>Contact</h2><p>Reach out via email or phone.</p>";
+  loadPage("pages/contactus.html");
 });
 
 // Profile route - redirect to login if not logged in

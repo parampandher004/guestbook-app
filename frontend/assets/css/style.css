@@ -262,8 +262,44 @@ footer {
 
 /* Page Container */
 .page-container {
+  position: relative;
   width: 100%; /* Fill the entire width */
   height: 100vh;
   padding: 20px;
   top: 50px;
+}
+
+/* Guestbook Entries Styling */
+#guestbookentries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.guestbook-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  width: 250px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.guestbook-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.guestbook-card h3 {
+  margin-top: 0;
+  color: var(--color-primary);
+}
+
+.guestbook-card p {
+  margin-bottom: 0;
+  color: var(--color-text);
 }
