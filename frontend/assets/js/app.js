@@ -1,10 +1,13 @@
 const app = document.getElementById("app");
 
-// Simulate a logged-in state (replace this with your actual authentication logic)
-const loggedIn = localStorage.getItem("loggedIn") === "true";
+function isLoggedIn() {
+  return document.cookie
+    .split(";")
+    .some((item) => item.trim().startsWith("userId="));
+}
 
 page("/frontend", () => {
-  app.innerHTML = "<h2>Home</h2><p>Welcome to the homepage.</p>";
+  loadPage("pages/home.html");
 });
 
 page("/frontend/login", () => {
@@ -23,13 +26,9 @@ page("/frontend/about", () => {
   loadPage("pages/about.html");
 });
 
-page("/frontend/contact", () => {
-  loadPage("pages/contactus.html");
-});
-
 // Profile route - redirect to login if not logged in
 page("/frontend/profile", () => {
-  if (loggedIn) {
+  if (isLoggedIn()) {
     loadPage("pages/profile.html");
   } else {
     page.redirect("/frontend/login"); // Redirect to login page
@@ -40,17 +39,27 @@ page();
 
 function loadPage(url) {
   fetch(url)
-    .then((response) => {
-      if (!response.ok) throw new Error("Page not found");
-      return response.text();
-    })
+    .then((response) => response.text())
     .then((html) => {
-      document.getElementById("app").innerHTML = html;
+      app.innerHTML = html;
+
+      // Initialize appropriate form based on URL
+      if (url.includes("login.html")) {
+        console.log("Initializing login form...");
+        window.initLogin?.();
+      }
+
+      // If the loaded page contains the guestbook container, run showGuestbookEntries.
+      if (
+        document.getElementById("guestbookentries") &&
+        window.showGuestbookEntries
+      ) {
+        window.showGuestbookEntries();
+      }
     })
     .catch((err) => {
-      document.getElementById("app").innerHTML =
-        "<h2>404 - Page Not Found</h2>";
-      console.error(err);
+      console.error("Page load error:", err);
+      app.innerHTML = "<h2>404 - Page Not Found</h2>";
     });
 }
 
@@ -65,6 +74,21 @@ function updateIcon(isDarkMode) {
   const icon = document.getElementById("darkModeIcon");
   icon.textContent = isDarkMode ? "🌙" : "☀️"; // Moon for dark mode, Sun for light mode
 }
+
+// Add scroll handler for footer
+window.addEventListener("scroll", () => {
+  const footer = document.querySelector("footer");
+  const windowHeight = window.innerHeight;
+  const documentHeight = document.documentElement.scrollHeight;
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+  // Show footer when near bottom
+  if (windowHeight + scrollTop >= documentHeight - 100) {
+    footer.style.bottom = "0";
+  } else {
+    footer.style.bottom = "-300px";
+  }
+});
 
 window.onload = function () {
   const darkMode = localStorage.getItem("darkMode") === "true";

@@ -17,7 +17,7 @@
 
     <div class="container">
       <h2>Login</h2>
-      <form action="/frontend/login.php" method="post" onsubmit="return validateLogin()">
+      <form id="loginForm" method="post">
         <input
           type="email"
           name="email"
@@ -37,5 +37,6 @@
         Don't have an account? <a href="/frontend/signup">Sign Up Here</a>
       </p>
     </div>
+    <script src="/frontend/assets/js/login.js"></script>
   </body>
 </html>

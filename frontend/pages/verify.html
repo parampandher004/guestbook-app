@@ -1,0 +1,27 @@
+<!-- verify.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Verify OTP</title>
+    <link rel="stylesheet" href="../assets/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Enter OTP</h2>
+      <form id="verifyForm">
+        <input
+          type="text"
+          name="otp"
+          placeholder="Enter 6-digit OTP"
+          required
+          maxlength="6"
+          pattern="[0-9]{6}"
+        />
+        <div class="error" id="otpError"></div>
+        <button type="submit">Verify</button>
+      </form>
+    </div>
+    <script src="/frontend/assets/js/auth.js"></script>
+  </body>
+</html>

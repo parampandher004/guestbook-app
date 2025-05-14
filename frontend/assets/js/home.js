@@ -36,6 +36,7 @@ function searchEntries(query) {
 }
 
 function showGuestbookEntries() {
+  console.log("Showing guestbook entries");
   const container = document.getElementById("guestbookentries");
   if (!container) {
     console.warn("guestbookentries container not found");
@@ -61,7 +62,3 @@ function showGuestbookEntries() {
     container.appendChild(card);
   });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  showGuestbookEntries();
-});

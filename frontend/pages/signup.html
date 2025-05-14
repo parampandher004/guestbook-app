@@ -3,11 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Signup</title>
-    <link rel="stylesheet" href="../assets/css/style.css" />
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <!-- FontAwesome for icons -->
-    <script src="../assets/js/signup.js" defer></script>
-    <!-- Link to the external JavaScript file -->
+    <link rel="stylesheet" href="/frontend/assets/css/style.css" />
+    <script src="/frontend/assets/js/signup.js" defer></script>
   </head>
   <body>
     <button class="dark-mode-toggle" onclick="toggleDarkMode()">
@@ -17,7 +14,7 @@
 
     <div class="container">
       <h2>Signup</h2>
-      <form action="/frontend/signup.php" method="post" onsubmit="return validateSignup()">
+      <form id="signupForm" method="POST">
         <input type="text" name="username" placeholder="Username" required />
         <input
           type="date"
@@ -38,16 +35,14 @@
           placeholder="Password"
           required
         />
-        <input 
-        type="url"
-        name = "url"
-        />
+        <input type="url" name="url" placeholder="URL" />
         <div class="error" id="signupError"></div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" onclick="onSignupClick(event)">Sign Up</button>
       </form>
       <p class="login-link">
         Already have an account? <a href="/frontend/login">Login Here</a>
       </p>
     </div>
+    <script src="/frontend/assets/js/signup.js"></script>
   </body>
 </html>

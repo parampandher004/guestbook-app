@@ -34,3 +34,43 @@ function validateSignup() {
 
   return true;
 }
+
+async function onSignupClick(event) {
+  event.preventDefault();
+  console.log("Sign Up button clicked");
+
+  if (!validateSignup()) {
+    return;
+  }
+
+  const form = document.getElementById("signupForm");
+  const formData = new FormData(form);
+  console.log("Form data:", Object.fromEntries(formData));
+
+  try {
+    const response = await fetch("/backend/routes/auth.php?action=signup", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    console.log("Response status:", response.status);
+    const data = await response.json();
+    console.log("Response data:", data);
+
+    if (data.success) {
+      window.location.href = "/frontend/pages/verify.html";
+    } else {
+      document.getElementById("signupError").textContent = data.message;
+    }
+  } catch (error) {
+    console.error("API Error:", error);
+    document.getElementById("signupError").textContent =
+      "An error occurred during signup";
+  }
+}
+
+// Expose the function globally for inline event handlers
+window.onSignupClick = onSignupClick;
