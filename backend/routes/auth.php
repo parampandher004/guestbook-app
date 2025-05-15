@@ -6,15 +6,26 @@ require_once __DIR__ . '/../controllers/AuthController.php';
 
 $auth = new AuthController();
 
-// For example, using a simple query parameter to decide the action:
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
+if (isset($_GET['action'])) {
     $action = $_GET['action'];
-    if ($action === 'login') {
-        $auth->login($_POST);
-    } elseif ($action === 'signup') {
-        $auth->signup($_POST);
-    } elseif ($action === 'verify') {
-        $auth->verify();
+    
+    if ($action === 'check_auth') {
+        $auth->check_auth();
+        exit();
+    }
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        switch($action) {
+            case 'login':
+                $auth->login($_POST);
+                break;
+            case 'signup':
+                $auth->signup($_POST);
+                break;
+            case 'verify':
+                $auth->verify();
+                break;
+        }
     }
 }
 ?>

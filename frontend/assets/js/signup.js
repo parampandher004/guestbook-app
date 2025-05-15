@@ -48,23 +48,33 @@ async function onSignupClick(event) {
   console.log("Form data:", Object.fromEntries(formData));
 
   try {
-    const response = await fetch("/backend/routes/auth.php?action=signup", {
-      method: "POST",
-      body: formData,
-      headers: {
-        Accept: "application/json",
-      },
-    });
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/backend/routes/auth.php?action=signup", true);
+    xhr.setRequestHeader("Accept", "application/json");
 
-    console.log("Response status:", response.status);
-    const data = await response.json();
-    console.log("Response data:", data);
+    xhr.onload = function () {
+      if (!xhr.responseText) {
+        document.getElementById("signupError").textContent =
+          "No response from server. Please try again later.";
+        return;
+      }
+      const data = JSON.parse(xhr.responseText);
+      console.log("Signup response:", data);
 
-    if (data.success) {
-      window.location.href = "/frontend/pages/verify.html";
-    } else {
-      document.getElementById("signupError").textContent = data.message;
-    }
+      if (data.success) {
+        window.location.href = "/frontend/pages/verify.html";
+      } else {
+        document.getElementById("signupError").textContent = data.message;
+      }
+    };
+
+    xhr.onerror = function () {
+      console.error("Signup API Error");
+      document.getElementById("signupError").textContent =
+        "An error occurred during signup";
+    };
+
+    xhr.send(formData);
   } catch (error) {
     console.error("API Error:", error);
     document.getElementById("signupError").textContent =

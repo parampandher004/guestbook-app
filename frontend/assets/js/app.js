@@ -1,9 +1,30 @@
 const app = document.getElementById("app");
 
-function isLoggedIn() {
-  return document.cookie
-    .split(";")
-    .some((item) => item.trim().startsWith("userId="));
+async function isLoggedIn() {
+  return new Promise((resolve) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/backend/routes/auth.php?action=check_auth", true);
+    xhr.setRequestHeader("Accept", "application/json");
+    xhr.withCredentials = true; // Important: send cookies
+
+    xhr.onload = function () {
+      try {
+        const data = JSON.parse(xhr.responseText);
+        console.log("Auth check response:", data, "Status:", xhr.status);
+        resolve(data.authenticated);
+      } catch (error) {
+        console.error("Auth check failed:", error);
+        resolve(false);
+      }
+    };
+
+    xhr.onerror = function () {
+      console.error("Auth check failed");
+      resolve(false);
+    };
+
+    xhr.send();
+  });
 }
 
 page("/frontend", () => {
@@ -27,8 +48,8 @@ page("/frontend/about", () => {
 });
 
 // Profile route - redirect to login if not logged in
-page("/frontend/profile", () => {
-  if (isLoggedIn()) {
+page("/frontend/profile", async () => {
+  if (await isLoggedIn()) {
     loadPage("pages/profile.html");
   } else {
     page.redirect("/frontend/login"); // Redirect to login page

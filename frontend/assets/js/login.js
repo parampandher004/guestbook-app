@@ -10,31 +10,33 @@ function initLogin() {
     console.log("Login form data:", Object.fromEntries(formData));
 
     try {
-      const response = await fetch("/backend/routes/auth.php?action=login", {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
-      });
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "/backend/routes/auth.php?action=login", true);
+      xhr.setRequestHeader("Accept", "application/json");
 
-      const responseText = await response.text();
-      if (!responseText) {
+      xhr.onload = function () {
+        if (!xhr.responseText) {
+          document.getElementById("loginError").textContent =
+            "No response from server. Please try again later.";
+          return;
+        }
+        const data = JSON.parse(xhr.responseText);
+        console.log("Login response:", data);
+
+        if (data.success) {
+          window.location.href = "/frontend/";
+        } else {
+          document.getElementById("loginError").textContent = data.message;
+        }
+      };
+
+      xhr.onerror = function () {
+        console.error("Login API Error");
         document.getElementById("loginError").textContent =
-          "No response from server. Please try again later.";
-        return;
-      }
+          "An error occurred during login";
+      };
 
-      const data = JSON.parse(responseText);
-      console.log("Login response:", data);
-
-      if (data.success) {
-        // Set cookie to expire in 7 days
-        document.cookie = `userId=${data.userId}; max-age=${
-          60 * 60 * 24 * 7
-        }; path=/`;
-        window.location.href = "/frontend/";
-      } else {
-        document.getElementById("loginError").textContent = data.message;
-      }
+      xhr.send(formData);
     } catch (error) {
       console.error("Login API Error:", error);
       document.getElementById("loginError").textContent =

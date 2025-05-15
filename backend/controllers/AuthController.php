@@ -2,6 +2,7 @@
     require_once __DIR__ . '/../config/database.php';
     require_once __DIR__ . '/../models/User.php';
     require_once __DIR__ . '/../utils/validator.php';
+    require_once __DIR__ . '/../utils/TokenManager.php';
 
     // Update PHPMailer paths if the library is located in backend/libs/PHPMailer
     require __DIR__ . '/../libs/PHPMailer/PHPMailer.php';
@@ -13,13 +14,19 @@
 
     class AuthController {
         private $log_file;
+        private $tokenManager;
         
         public function __construct() {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            global $conn;
             $log_dir = __DIR__ . '/../logs';
             if (!is_dir($log_dir)) {
                 mkdir($log_dir, 0777, true);
             }
             $this->log_file = $log_dir . '/debug.log';
+            $this->tokenManager = new TokenManager($conn);
         }
         
         private function debug_log($message) {
@@ -30,6 +37,8 @@
         public function login($data) {
             global $conn;
             header('Content-Type: application/json');
+            
+            $this->debug_log("Login attempt - Session ID: " . session_id());
             
             $email = sanitizeInput($data['email'] ?? '');
             $password = sanitizeInput($data['password'] ?? '');
@@ -47,12 +56,29 @@
 
             if ($user = $result->fetch_assoc()) {
                 if (password_verify($password, $user['password_hash'])) {
-                    $_SESSION['username'] = $user['username'];
+                    $session = $this->tokenManager->createSession($user['id']);
+                    
+                    setcookie('sessionId', $session['sessionId'], [
+                        'expires' => strtotime($session['expiresAt']),
+                        'path' => '/',
+                        'httponly' => true,
+                        'secure' => false,
+                        'samesite' => 'Lax'
+                    ]);
+                    
+                    setcookie('access_token', $session['accessToken'], [
+                        'expires' => strtotime($session['expiresAt']),
+                        'path' => '/',
+                        'httponly' => true,
+                        'secure' => false,
+                        'samesite' => 'Lax'
+                    ]);
+                    
                     echo json_encode([
                         'success' => true, 
-                        'message' => 'Login successful',
-                        'userId' => $user['id']
+                        'message' => 'Login successful'
                     ]);
+                    exit();
                 } else {
                     http_response_code(401);
                     echo json_encode(['success' => false, 'message' => 'Invalid password']);
@@ -175,17 +201,46 @@
                     
                     $insert = $conn->prepare("INSERT INTO users (username, dob, email, password_hash, url, created_at) VALUES (?, ?, ?, ?, ?, ?)");
                     $insert->bind_param("ssssss", $row['username'], $row['dob'], $row['email'], $row['password_hash'], $row['url'], $created_at);
-                    $insert->execute();
-    
-                    // Remove from pending
-                    $delete = $conn->prepare("DELETE FROM pending_users WHERE email = ?");
-                    $delete->bind_param("s", $email);
-                    $delete->execute();
-    
-                    ob_clean();
-                    http_response_code(200);
-                    echo json_encode(['success' => true, 'message' => 'OTP verified successfully']);
-                    exit();
+                    
+                    if ($insert->execute()) {
+                        $userId = $insert->insert_id;
+                        
+                        // Create session for new user
+                        $session = $this->tokenManager->createSession($userId);
+                        
+                        setcookie('sessionId', $session['sessionId'], [
+                            'expires' => strtotime($session['expiresAt']),
+                            'path' => '/',
+                            'httponly' => true,
+                            'secure' => false,
+                            'samesite' => 'Lax'
+                        ]);
+                        
+                        setcookie('access_token', $session['accessToken'], [
+                            'expires' => strtotime($session['expiresAt']),
+                            'path' => '/',
+                            'httponly' => true,
+                            'secure' => false,
+                            'samesite' => 'Lax'
+                        ]);
+                        
+                        // Remove from pending users
+                        $delete = $conn->prepare("DELETE FROM pending_users WHERE email = ?");
+                        $delete->bind_param("s", $email);
+                        $delete->execute();
+                        
+                        ob_clean();
+                        http_response_code(200);
+                        echo json_encode([
+                            'success' => true, 
+                            'message' => 'OTP verified successfully',
+                            'debug' => [
+                                'sessionCreated' => true,
+                                'userId' => $userId
+                            ]
+                        ]);
+                        exit();
+                    }
                 } else {
                     $delete = $conn->prepare("DELETE FROM pending_users WHERE email = ?");
                     $delete->bind_param("s", $email);
@@ -208,6 +263,80 @@
     
             $stmt->close();
             $conn->close();
+        }
+
+        public function refresh() {
+            $refreshToken = $_COOKIE['refresh_token'] ?? null;
+            if (!$refreshToken) {
+                http_response_code(401);
+                echo json_encode(['error' => 'No refresh token']);
+                exit();
+            }
+            
+            $userId = $this->tokenManager->verifyRefreshToken($refreshToken);
+            if (!$userId) {
+                http_response_code(401);
+                echo json_encode(['error' => 'Invalid refresh token']);
+                exit();
+            }
+            
+            $accessToken = $this->tokenManager->generateAccessToken($userId);
+            $_SESSION['access_token'] = $accessToken['token'];
+            
+            setcookie('access_token', $accessToken['token'], [
+                'expires' => $accessToken['expires'],
+                'path' => '/',
+                'httponly' => true,
+                'secure' => true,
+                'samesite' => 'Strict'
+            ]);
+            
+            echo json_encode(['success' => true]);
+        }
+        
+        public function logout() {
+            $sessionId = $_COOKIE['sessionId'] ?? null;
+            if ($sessionId) {
+                $this->tokenManager->deleteSession($sessionId);
+            }
+            
+            setcookie('sessionId', '', time() - 3600, '/');
+            setcookie('access_token', '', time() - 3600, '/');
+            echo json_encode(['success' => true]);
+        }
+
+        public function check_auth() {
+            header('Content-Type: application/json');
+            
+            $sessionId = $_COOKIE['sessionId'] ?? null;
+            $accessToken = $_COOKIE['access_token'] ?? null;
+            
+            $this->debug_log("Checking auth with sessionId: $sessionId");
+            $this->debug_log("Access token: $accessToken");
+            
+            if (!$sessionId || !$accessToken) {
+                echo json_encode([
+                    'authenticated' => false, 
+                    'reason' => 'Missing tokens',
+                    'debug' => [
+                        'hasSessionId' => !empty($sessionId),
+                        'hasAccessToken' => !empty($accessToken)
+                    ]
+                ]);
+                exit();
+            }
+            
+            $userId = $this->tokenManager->verifySession($sessionId, $accessToken);
+            $this->debug_log("Verification result - userId: " . ($userId ?? 'null'));
+            
+            echo json_encode([
+                'authenticated' => !empty($userId),
+                'debug' => [
+                    'userId' => $userId,
+                    'sessionId' => $sessionId
+                ]
+            ]);
+            exit();
         }
     }
 ?>

@@ -19,3 +19,100 @@
     [created_at] => 2025-05-14 15:43:58
 )
 
+[2025-05-15 10:25:04] Checking auth - Access Token: exists
+[2025-05-15 10:25:04] Session Token: missing
+[2025-05-15 10:25:27] Checking auth - Access Token: exists
+[2025-05-15 10:25:27] Session Token: missing
+[2025-05-15 10:26:40] Check Auth - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 10:26:40] Session data: Array
+(
+)
+
+[2025-05-15 10:26:40] Cookies: Array
+(
+    [access_token] => 3e16337fc476fae0878c24f856c210f68da1f450867017222b840125a3665f78
+    [refresh_token] => 97d806cc6ff998f52c45ff67030a7915f92e541c81d73395015d2f9d74259928
+    [userId] => 1
+    [PHPSESSID] => cu5prde69h6p15t22k62bamubq
+)
+
+[2025-05-15 10:28:08] Check Auth - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 10:28:08] Session data: Array
+(
+)
+
+[2025-05-15 10:28:08] Cookies: Array
+(
+    [access_token] => 3e16337fc476fae0878c24f856c210f68da1f450867017222b840125a3665f78
+    [refresh_token] => 97d806cc6ff998f52c45ff67030a7915f92e541c81d73395015d2f9d74259928
+    [userId] => 1
+    [PHPSESSID] => cu5prde69h6p15t22k62bamubq
+)
+
+[2025-05-15 10:30:45] Checking auth - Access Token: exists
+[2025-05-15 10:30:45] Session Token: missing
+[2025-05-15 10:30:46] Checking auth - Access Token: exists
+[2025-05-15 10:30:46] Session Token: missing
+[2025-05-15 10:34:40] Check Auth - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 10:34:40] Session data: Array
+(
+)
+
+[2025-05-15 10:34:40] Cookies: Array
+(
+    [access_token] => 3e16337fc476fae0878c24f856c210f68da1f450867017222b840125a3665f78
+    [refresh_token] => 97d806cc6ff998f52c45ff67030a7915f92e541c81d73395015d2f9d74259928
+    [userId] => 1
+    [PHPSESSID] => cu5prde69h6p15t22k62bamubq
+)
+
+[2025-05-15 10:55:14] Check Auth - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 10:55:14] Session data: Array
+(
+)
+
+[2025-05-15 10:55:14] Cookies: Array
+(
+    [refresh_token] => 97d806cc6ff998f52c45ff67030a7915f92e541c81d73395015d2f9d74259928
+    [userId] => 1
+    [PHPSESSID] => cu5prde69h6p15t22k62bamubq
+)
+
+[2025-05-15 11:00:23] === Check Auth Debug ===
+[2025-05-15 11:00:23] Session save path: C:\xampp\tmp
+[2025-05-15 11:00:23] Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 11:00:23] Session name: PHPSESSID
+[2025-05-15 11:00:23] Full Session data: Array
+(
+)
+
+[2025-05-15 11:00:23] Session Cookie params: Array
+(
+    [lifetime] => 0
+    [path] => /
+    [domain] => 
+    [secure] => 
+    [httponly] => 
+    [samesite] => 
+)
+
+[2025-05-15 11:05:03] Login attempt - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 11:05:05] Login attempt - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 11:05:06] Login attempt - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 11:05:06] Login attempt - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 11:05:07] Login attempt - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 11:20:18] Login attempt - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 11:26:46] Login attempt - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 11:32:16] Login attempt - Session ID: cu5prde69h6p15t22k62bamubq
+[2025-05-15 11:34:35] Checking auth with sessionId: 749dab1d7bea3006465bf73eaab353643cfb7487a26582c26a119fe96530f1cf
+[2025-05-15 11:34:35] Access token: 7b010916a783a94f22b9b5f16e0b2fd43475c134a47da01f2ea2875c555df119
+[2025-05-15 11:34:35] Verification result - userId: null
+[2025-05-15 11:37:10] Checking auth with sessionId: 749dab1d7bea3006465bf73eaab353643cfb7487a26582c26a119fe96530f1cf
+[2025-05-15 11:37:10] Access token: 7b010916a783a94f22b9b5f16e0b2fd43475c134a47da01f2ea2875c555df119
+[2025-05-15 11:37:10] Verification result - userId: 1
+[2025-05-15 11:37:32] Checking auth with sessionId: 749dab1d7bea3006465bf73eaab353643cfb7487a26582c26a119fe96530f1cf
+[2025-05-15 11:37:32] Access token: 7b010916a783a94f22b9b5f16e0b2fd43475c134a47da01f2ea2875c555df119
+[2025-05-15 11:37:32] Verification result - userId: 1
+[2025-05-15 11:39:41] Checking auth with sessionId: 749dab1d7bea3006465bf73eaab353643cfb7487a26582c26a119fe96530f1cf
+[2025-05-15 11:39:41] Access token: 7b010916a783a94f22b9b5f16e0b2fd43475c134a47da01f2ea2875c555df119
+[2025-05-15 11:39:41] Verification result - userId: 1
