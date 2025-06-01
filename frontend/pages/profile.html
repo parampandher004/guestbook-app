@@ -7,10 +7,6 @@
     <script src="../assets/js/profile.js" defer></script>
   </head>
   <body>
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
-      <span id="darkModeIcon">🌞</span>
-    </button>
-
     <div class="container">
       <h2>Profile</h2>
       <form action="#" method="post" onsubmit="return validateProfile()">
@@ -23,12 +19,7 @@
           pattern="[0-9]{10}"
           title="Enter a valid 10-digit phone number"
         />
-        <input
-          type="date"
-          name="dob"
-          placeholder="Date of Birth"
-          required
-        />
+        <input type="date" name="dob" placeholder="Date of Birth" required />
         <h3>Change Password</h3>
         <input
           type="password"
@@ -43,7 +34,7 @@
           required
         />
         <div class="error" id="profileError"></div>
-        <button type="submit">Update Profile</button>
+        <button class="submit-button" type="submit">Update Profile</button>
       </form>
     </div>
   </body>

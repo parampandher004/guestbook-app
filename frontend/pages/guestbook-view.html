@@ -1,0 +1,129 @@
+<body>
+  <div class="container">
+    <header class="guestbook-header">
+      <div class="guestbook-info">
+        <h1 id="guestbook-title">Travel Adventures</h1>
+        <p id="guestbook-owner">Created by: John Doe</p>
+      </div>
+      <div class="user-actions">
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          aria-label="Toggle theme"
+        >
+          <i class="fas fa-sun light-icon"></i>
+          <i class="fas fa-moon dark-icon"></i>
+        </button>
+        <button id="back-btn">Back to My Guestbooks</button>
+      </div>
+    </header>
+    <section class="message-form">
+      <h2>Leave a Message</h2>
+      <div class="form-header">
+        <div class="profile-picture" id="user-profile">
+          <img
+            src="/api/placeholder/50/50"
+            alt="User Profile"
+            id="profile-preview"
+          />
+          <input
+            type="file"
+            id="profile-upload"
+            accept="image/*"
+            class="profile-upload"
+            title="Upload profile picture"
+            aria-label="Upload profile picture"
+            placeholder="Choose a profile picture"
+          />
+          <label for="profile-upload" class="profile-upload-label">
+            <i class="fas fa-camera"></i>
+          </label>
+        </div>
+      </div>
+      <form id="message-form">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Post Message</button>
+      </form>
+    </section>
+    <section class="messages">
+      <h2>Messages</h2>
+      <div class="message-list" id="message-list">
+        <!-- Messages will be loaded here by JavaScript -->
+        <div class="loading">Loading messages...</div>
+      </div>
+    </section>
+  </div>
+  <!-- Message template for JavaScript to use -->
+  <template id="message-template">
+    <div class="message-card">
+      <div class="message-header">
+        <div class="message-user-info">
+          <div class="message-profile-picture">
+            <img src="/api/placeholder/40/40" alt="Profile" />
+          </div>
+          <div>
+            <div class="message-author"></div>
+            <div class="message-time"></div>
+          </div>
+        </div>
+        <div class="message-options">
+          <button class="options-btn">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+        </div>
+      </div>
+      <div class="message-content"></div>
+      <div class="message-actions">
+        <div class="vote-actions">
+          <button class="upvote-btn">
+            <i class="fas fa-thumbs-up"></i>
+            <span class="upvote-count">0</span>
+          </button>
+          <button class="downvote-btn">
+            <i class="fas fa-thumbs-down"></i>
+            <span class="downvote-count">0</span>
+          </button>
+        </div>
+        <button class="reply-btn"><i class="fas fa-reply"></i> Reply</button>
+      </div>
+      <div class="reply-form hidden">
+        <textarea placeholder="Write your reply..."></textarea>
+        <div class="reply-actions">
+          <button class="submit-reply">Submit</button>
+          <button class="cancel-reply">Cancel</button>
+        </div>
+      </div>
+      <div class="replies"></div>
+    </div>
+  </template>
+  <!-- Reply template for JavaScript to use -->
+  <template id="reply-template">
+    <div class="reply-card">
+      <div class="reply-header">
+        <div class="reply-user-info">
+          <div class="reply-profile-picture">
+            <img src="/api/placeholder/30/30" alt="Profile" />
+          </div>
+          <div>
+            <div class="reply-author"></div>
+            <div class="reply-time"></div>
+          </div>
+        </div>
+      </div>
+      <div class="reply-content"></div>
+    </div>
+  </template>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>

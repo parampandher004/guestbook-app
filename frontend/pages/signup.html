@@ -7,11 +7,6 @@
     <script src="/frontend/assets/js/signup.js" defer></script>
   </head>
   <body>
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
-      <span id="darkModeIcon">🌞</span>
-      <!-- Sun emoji -->
-    </button>
-
     <div class="container">
       <h2>Signup</h2>
       <form id="signupForm" method="POST">
@@ -37,7 +32,13 @@
         />
         <input type="url" name="url" placeholder="URL" />
         <div class="error" id="signupError"></div>
-        <button type="submit" onclick="onSignupClick(event)">Sign Up</button>
+        <button
+          class="submit-button"
+          type="submit"
+          onclick="onSignupClick(event)"
+        >
+          Sign Up
+        </button>
       </form>
       <p class="login-link">
         Already have an account? <a href="/frontend/login">Login Here</a>

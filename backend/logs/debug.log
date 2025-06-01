@@ -116,3 +116,102 @@
 [2025-05-15 11:39:41] Checking auth with sessionId: 749dab1d7bea3006465bf73eaab353643cfb7487a26582c26a119fe96530f1cf
 [2025-05-15 11:39:41] Access token: 7b010916a783a94f22b9b5f16e0b2fd43475c134a47da01f2ea2875c555df119
 [2025-05-15 11:39:41] Verification result - userId: 1
+[2025-05-31 10:04:59] Checking auth with sessionId: 
+[2025-05-31 10:04:59] Access token: 
+[2025-05-31 10:15:39] Checking auth with sessionId: 
+[2025-05-31 10:15:39] Access token: 
+[2025-05-31 10:17:13] Checking auth with sessionId: 
+[2025-05-31 10:17:13] Access token: 
+[2025-05-31 11:57:11] Checking auth with sessionId: 
+[2025-05-31 11:57:11] Access token: 
+[2025-05-31 11:58:39] Checking auth with sessionId: 
+[2025-05-31 11:58:39] Access token: 
+[2025-05-31 11:59:47] Checking auth with sessionId: 
+[2025-05-31 11:59:47] Access token: 
+[2025-05-31 12:00:50] Checking auth with sessionId: 
+[2025-05-31 12:00:50] Access token: 
+[2025-05-31 12:01:42] Checking auth with sessionId: 
+[2025-05-31 12:01:42] Access token: 
+[2025-05-31 12:06:25] Checking auth with sessionId: 
+[2025-05-31 12:06:25] Access token: 
+[2025-05-31 13:16:00] Checking auth with sessionId: 
+[2025-05-31 13:16:00] Access token: 
+[2025-05-31 13:16:29] Checking auth with sessionId: 
+[2025-05-31 13:16:29] Access token: 
+[2025-05-31 15:52:29] Checking auth with sessionId: 
+[2025-05-31 15:52:29] Access token: 
+[2025-05-31 15:52:49] Checking auth with sessionId: 
+[2025-05-31 15:52:49] Access token: 
+[2025-05-31 15:55:25] Checking auth with sessionId: 
+[2025-05-31 15:55:25] Access token: 
+[2025-05-31 16:02:09] Checking auth with sessionId: 
+[2025-05-31 16:02:09] Access token: 
+[2025-05-31 16:03:55] Checking auth with sessionId: 
+[2025-05-31 16:03:55] Access token: 
+[2025-05-31 16:14:34] Checking auth with sessionId: 
+[2025-05-31 16:14:34] Access token: 
+[2025-05-31 16:14:56] Checking auth with sessionId: 
+[2025-05-31 16:14:56] Access token: 
+[2025-05-31 16:16:43] Checking auth with sessionId: 
+[2025-05-31 16:16:43] Access token: 
+[2025-05-31 16:17:05] Checking auth with sessionId: 
+[2025-05-31 16:17:05] Access token: 
+[2025-05-31 16:31:34] Checking auth with sessionId: 
+[2025-05-31 16:31:34] Access token: 
+[2025-05-31 16:34:20] Checking auth with sessionId: 
+[2025-05-31 16:34:20] Access token: 
+[2025-06-01 08:52:59] Checking auth with sessionId: 
+[2025-06-01 08:52:59] Access token: 
+[2025-06-01 08:53:13] Checking auth with sessionId: 
+[2025-06-01 08:53:13] Access token: 
+[2025-06-01 08:53:18] Checking auth with sessionId: 
+[2025-06-01 08:53:18] Access token: 
+[2025-06-01 08:55:39] Checking auth with sessionId: 
+[2025-06-01 08:55:39] Access token: 
+[2025-06-01 08:58:33] Checking auth with sessionId: 
+[2025-06-01 08:58:33] Access token: 
+[2025-06-01 09:04:54] Checking auth with sessionId: 
+[2025-06-01 09:04:54] Access token: 
+[2025-06-01 09:31:25] Checking auth with sessionId: 
+[2025-06-01 09:31:25] Access token: 
+[2025-06-01 09:31:42] Checking auth with sessionId: 
+[2025-06-01 09:31:42] Access token: 
+[2025-06-01 10:03:42] Checking auth with sessionId: 
+[2025-06-01 10:03:42] Access token: 
+[2025-06-01 10:03:45] Checking auth with sessionId: 
+[2025-06-01 10:03:45] Access token: 
+[2025-06-01 10:04:16] Checking auth with sessionId: 
+[2025-06-01 10:04:16] Access token: 
+[2025-06-01 10:06:29] Checking auth with sessionId: 
+[2025-06-01 10:06:29] Access token: 
+[2025-06-01 10:06:38] Login attempt - Session ID: mg8co5h2d8l8jifcqejq243mis
+[2025-06-01 10:06:42] Checking auth with sessionId: ea1aa1c6f4e9ad36d37b701191292035b49cd78edd7bd855360645d9242c60b0
+[2025-06-01 10:06:42] Access token: 52c733fee18e63beba483951dd08f1e12d23d7788fe81d6527ab4b1bd496490d
+[2025-06-01 10:06:42] Verification result - userId: 1
+[2025-06-01 10:10:40] Checking auth with sessionId: ea1aa1c6f4e9ad36d37b701191292035b49cd78edd7bd855360645d9242c60b0
+[2025-06-01 10:10:40] Access token: 52c733fee18e63beba483951dd08f1e12d23d7788fe81d6527ab4b1bd496490d
+[2025-06-01 10:10:40] Verification result - userId: 1
+[2025-06-01 10:15:42] Checking auth with sessionId: ea1aa1c6f4e9ad36d37b701191292035b49cd78edd7bd855360645d9242c60b0
+[2025-06-01 10:15:42] Access token: 52c733fee18e63beba483951dd08f1e12d23d7788fe81d6527ab4b1bd496490d
+[2025-06-01 10:15:42] Verification result - userId: 1
+[2025-06-01 10:19:27] Checking auth with sessionId: ea1aa1c6f4e9ad36d37b701191292035b49cd78edd7bd855360645d9242c60b0
+[2025-06-01 10:19:27] Access token: 52c733fee18e63beba483951dd08f1e12d23d7788fe81d6527ab4b1bd496490d
+[2025-06-01 10:19:27] Verification result - userId: 1
+[2025-06-01 10:22:22] Checking auth with sessionId: 
+[2025-06-01 10:22:22] Access token: 
+[2025-06-01 10:22:26] Login attempt - Session ID: mg8co5h2d8l8jifcqejq243mis
+[2025-06-01 10:22:28] Checking auth with sessionId: 7144d717035510204604d3e3991c4161ab9a9c897a76e5f9e2b4227b0dc6fdbd
+[2025-06-01 10:22:28] Access token: cd21ea3d85f5d3454ec99a5926431b85c89adfff7d26649a01bebeab0d285790
+[2025-06-01 10:22:28] Verification result - userId: 1
+[2025-06-01 10:23:12] Checking auth with sessionId: 7144d717035510204604d3e3991c4161ab9a9c897a76e5f9e2b4227b0dc6fdbd
+[2025-06-01 10:23:12] Access token: cd21ea3d85f5d3454ec99a5926431b85c89adfff7d26649a01bebeab0d285790
+[2025-06-01 10:23:12] Verification result - userId: 1
+[2025-06-01 10:23:33] Checking auth with sessionId: 7144d717035510204604d3e3991c4161ab9a9c897a76e5f9e2b4227b0dc6fdbd
+[2025-06-01 10:23:33] Access token: cd21ea3d85f5d3454ec99a5926431b85c89adfff7d26649a01bebeab0d285790
+[2025-06-01 10:23:33] Verification result - userId: 1
+[2025-06-01 10:23:53] Checking auth with sessionId: 7144d717035510204604d3e3991c4161ab9a9c897a76e5f9e2b4227b0dc6fdbd
+[2025-06-01 10:23:53] Access token: cd21ea3d85f5d3454ec99a5926431b85c89adfff7d26649a01bebeab0d285790
+[2025-06-01 10:23:53] Verification result - userId: 1
+[2025-06-01 10:24:35] Checking auth with sessionId: 7144d717035510204604d3e3991c4161ab9a9c897a76e5f9e2b4227b0dc6fdbd
+[2025-06-01 10:24:35] Access token: cd21ea3d85f5d3454ec99a5926431b85c89adfff7d26649a01bebeab0d285790
+[2025-06-01 10:24:35] Verification result - userId: 1

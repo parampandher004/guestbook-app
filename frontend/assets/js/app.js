@@ -32,15 +32,18 @@ page("/frontend", () => {
 });
 
 page("/frontend/login", () => {
-  loadPage("pages/login.html"); // now using correct relative path
+  loadPage("pages/login.html");
 });
 
 page("/frontend/signup", () => {
-  loadPage("pages/signup.html"); // updated path without extra ../
+  loadPage("pages/signup.html");
 });
 
-page("/frontend/guestbook", () => {
-  loadPage("pages/guestbook.html"); // updated path without extra ../
+page("/frontend/guestbook/:id", async (ctx) => {
+  const guestbookId = ctx.params.id;
+  loadPage("pages/guestbook-view.html").then(() => {
+    loadGuestbookDetails(guestbookId);
+  });
 });
 
 page("/frontend/about", () => {
@@ -90,26 +93,6 @@ function toggleDarkMode() {
   localStorage.setItem("darkMode", darkModeStatus); // Persist dark mode setting
   updateIcon(darkModeStatus);
 }
-
-function updateIcon(isDarkMode) {
-  const icon = document.getElementById("darkModeIcon");
-  icon.textContent = isDarkMode ? "🌙" : "☀️"; // Moon for dark mode, Sun for light mode
-}
-
-// Add scroll handler for footer
-window.addEventListener("scroll", () => {
-  const footer = document.querySelector("footer");
-  const windowHeight = window.innerHeight;
-  const documentHeight = document.documentElement.scrollHeight;
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-  // Show footer when near bottom
-  if (windowHeight + scrollTop >= documentHeight - 100) {
-    footer.style.bottom = "0";
-  } else {
-    footer.style.bottom = "-300px";
-  }
-});
 
 window.onload = function () {
   const darkMode = localStorage.getItem("darkMode") === "true";

@@ -10,11 +10,6 @@
     <!-- Link to the external JavaScript file -->
   </head>
   <body>
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
-      <span id="darkModeIcon">☀️</span>
-      <!-- Sun emoji -->
-    </button>
-
     <div class="container">
       <h2>Login</h2>
       <form id="loginForm" method="post">
@@ -31,7 +26,7 @@
           required
         />
         <div class="error" id="loginError"></div>
-        <button type="submit">Login</button>
+        <button class="submit-button" type="submit">Login</button>
       </form>
       <p class="signup-link">
         Don't have an account? <a href="/frontend/signup">Sign Up Here</a>

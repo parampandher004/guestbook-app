@@ -51,7 +51,7 @@ function showGuestbookEntries() {
     title.textContent = guestbook.title;
     title.style.cursor = "pointer";
     title.addEventListener("click", () => {
-      console.log(`Navigating to guestbook with ID: ${guestbook.id}`);
+      page(`/frontend/guestbook/${guestbook.id}`);
     });
 
     const description = document.createElement("p");
