@@ -41,9 +41,17 @@ page("/frontend/signup", () => {
 
 page("/frontend/guestbook/:id", async (ctx) => {
   const guestbookId = ctx.params.id;
-  loadPage("pages/guestbook-view.html").then(() => {
-    loadGuestbookDetails(guestbookId);
-  });
+  await loadPage("pages/guestbook-view.html");
+  const guestbook = JSON.parse(localStorage.getItem("currentGuestbook"));
+
+  // Set guestbook details
+  document.getElementById("guestbook-title").textContent = guestbook.title;
+  document.getElementById(
+    "guestbook-owner"
+  ).textContent = `Created by: ${guestbook.creator_name}`;
+
+  // Fetch and display messages
+  fetchMessages(guestbookId);
 });
 
 page("/frontend/about", () => {
@@ -62,24 +70,28 @@ page("/frontend/profile", async () => {
 page();
 
 function loadPage(url) {
-  fetch(url)
+  return fetch(url)
     .then((response) => response.text())
     .then((html) => {
       app.innerHTML = html;
 
-      // Initialize appropriate form based on URL
-      if (url.includes("login.html")) {
-        console.log("Initializing login form...");
-        window.initLogin?.();
-      }
-
-      // If the loaded page contains the guestbook container, run showGuestbookEntries.
-      if (
-        document.getElementById("guestbookentries") &&
-        window.showGuestbookEntries
-      ) {
-        window.showGuestbookEntries();
-      }
+      const scripts = Array.from(app.getElementsByTagName("script"));
+      return Promise.all(
+        scripts.map((script) => {
+          const newScript = document.createElement("script");
+          if (script.src) {
+            newScript.src = script.src;
+            return new Promise((resolve) => {
+              newScript.onload = resolve;
+              document.head.appendChild(newScript);
+            });
+          } else {
+            newScript.textContent = script.textContent;
+            document.head.appendChild(newScript);
+            return Promise.resolve();
+          }
+        })
+      );
     })
     .catch((err) => {
       console.error("Page load error:", err);

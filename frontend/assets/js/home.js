@@ -5,45 +5,48 @@ if (searchInput) {
   });
 }
 
-const guestbooks = [
-  {
-    id: 1,
-    title: "Family Trip 2024",
-    description: "Memories from our amazing family vacation.",
-  },
-  {
-    id: 2,
-    title: "Friends Getaway - Beach House",
-    description: "Fun times with my closest friends at the beach.",
-  },
-  {
-    id: 3,
-    title: "Work Retreat - Innovation Hub",
-    description: "Brainstorming and team building at the company retreat.",
-  },
-  {
-    id: 4,
-    title: "Birthday Celebration",
-    description: "Celebrating another year with loved ones.",
-  },
-];
+let guestbooks = []; // Will be populated from API
+
+async function fetchGuestbooks() {
+  try {
+    const response = await fetch(
+      "http://localhost/backend/routes/guestbook.php",
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    if (data.success) {
+      guestbooks = data.entries;
+      showGuestbookEntries();
+    } else {
+      console.error("Failed to fetch guestbooks:", data.message);
+    }
+  } catch (error) {
+    console.error("Error fetching guestbooks:", error);
+  }
+}
 
 function searchEntries(query) {
-  const filtered = guestbookEntries.filter((entry) =>
-    entry.toLowerCase().includes(query.toLowerCase())
+  const filtered = guestbooks.filter(
+    (entry) =>
+      entry.title.toLowerCase().includes(query.toLowerCase()) ||
+      entry.description.toLowerCase().includes(query.toLowerCase())
   );
   showGuestbookEntries(filtered);
 }
 
-function showGuestbookEntries() {
+function showGuestbookEntries(entriesToShow = guestbooks) {
   console.log("Showing guestbook entries");
   const container = document.getElementById("guestbookentries");
   if (!container) {
     console.warn("guestbookentries container not found");
     return;
   }
+
   container.innerHTML = "";
-  guestbooks.forEach((guestbook) => {
+  entriesToShow.forEach((guestbook) => {
     const card = document.createElement("div");
     card.className = "guestbook-card";
 
@@ -51,14 +54,30 @@ function showGuestbookEntries() {
     title.textContent = guestbook.title;
     title.style.cursor = "pointer";
     title.addEventListener("click", () => {
+      localStorage.setItem("currentGuestbook", JSON.stringify(guestbook));
       page(`/frontend/guestbook/${guestbook.id}`);
     });
 
     const description = document.createElement("p");
     description.textContent = guestbook.description;
 
+    const metadata = document.createElement("div");
+    metadata.className = "metadata";
+    metadata.textContent = `Created by ${guestbook.creator_name} on ${new Date(
+      guestbook.created_at
+    ).toLocaleDateString()}`;
+
+    const visibility = document.createElement("span");
+    visibility.className = `visibility-badge ${guestbook.visibility}`;
+    visibility.textContent = guestbook.visibility;
+
     card.appendChild(title);
     card.appendChild(description);
+    card.appendChild(metadata);
+    card.appendChild(visibility);
     container.appendChild(card);
   });
 }
+
+// Call fetchGuestbooks when the page loads
+document.addEventListener("DOMContentLoaded", fetchGuestbooks);
