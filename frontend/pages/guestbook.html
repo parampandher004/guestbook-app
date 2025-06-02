@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Guestbooks</title>
+  </head>
+  <body>
+    <div class="container">
+      <h2>My Guestbooks</h2>
+      <button id="createGuestbook" class="btn">Create New Guestbook</button>
+
+      <div id="guestbookList"></div>
+
+      <!-- Edit Modal -->
+      <div id="editModal" class="modal" style="display: none">
+        <div class="modal-content">
+          <h3>Edit Guestbook</h3>
+          <form id="editForm">
+            <input type="text" id="editTitle" placeholder="Title" required />
+            <textarea id="editDescription" placeholder="Description"></textarea>
+            <select id="editVisibility">
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+            <select id="editStatus">
+              <option value="active">Active</option>
+              <option value="archived">Archived</option>
+            </select>
+            <button type="submit">Save Changes</button>
+            <button type="button" onclick="closeModal()">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="../assets/js/guestbook.js"></script>
+  </body>
+</html>

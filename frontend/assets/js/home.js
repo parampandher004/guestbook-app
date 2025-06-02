@@ -5,8 +5,6 @@ if (searchInput) {
   });
 }
 
-let guestbooks = []; // Will be populated from API
-
 async function fetchGuestbooks() {
   try {
     const response = await fetch(
@@ -18,7 +16,7 @@ async function fetchGuestbooks() {
     );
     const data = await response.json();
     if (data.success) {
-      guestbooks = data.entries;
+      fetchGuestbooks = data.entries;
       showGuestbookEntries();
     } else {
       console.error("Failed to fetch guestbooks:", data.message);
@@ -29,7 +27,7 @@ async function fetchGuestbooks() {
 }
 
 function searchEntries(query) {
-  const filtered = guestbooks.filter(
+  const filtered = fetchGuestbooks.filter(
     (entry) =>
       entry.title.toLowerCase().includes(query.toLowerCase()) ||
       entry.description.toLowerCase().includes(query.toLowerCase())
@@ -37,7 +35,7 @@ function searchEntries(query) {
   showGuestbookEntries(filtered);
 }
 
-function showGuestbookEntries(entriesToShow = guestbooks) {
+function showGuestbookEntries(entriesToShow = fetchGuestbooks) {
   console.log("Showing guestbook entries");
   const container = document.getElementById("guestbookentries");
   if (!container) {
@@ -79,5 +77,4 @@ function showGuestbookEntries(entriesToShow = guestbooks) {
   });
 }
 
-// Call fetchGuestbooks when the page loads
-document.addEventListener("DOMContentLoaded", fetchGuestbooks);
+fetchGuestbooks();

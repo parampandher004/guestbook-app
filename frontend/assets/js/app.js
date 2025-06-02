@@ -69,13 +69,49 @@ page("/frontend/profile", async () => {
   }
 });
 
+page("/frontend/guestbook", async () => {
+  if (await isLoggedIn()) {
+    loadPage("pages/guestbook.html");
+  } else {
+    page.redirect("/frontend/login");
+  }
+});
+
 page();
+
+// Add page-script mapping
+const pageScripts = {
+  "pages/home.html": "home.js",
+  "pages/guestbook.html": "guestbook.js",
+  "pages/login.html": "login.js",
+  "pages/signup.html": "signup.js",
+};
+
+function loadPageScript(url) {
+  const scriptName = pageScripts[url];
+  if (!scriptName) return Promise.resolve();
+
+  return new Promise((resolve) => {
+    const existingScript = document.querySelector(
+      `script[src*="${scriptName}"]`
+    );
+    if (existingScript) {
+      existingScript.remove();
+    }
+
+    const script = document.createElement("script");
+    script.src = `/frontend/assets/js/${scriptName}`;
+    script.onload = resolve;
+    document.body.appendChild(script);
+  });
+}
 
 function loadPage(url) {
   return fetch(url)
     .then((response) => response.text())
     .then((html) => {
       app.innerHTML = html;
+      return loadPageScript(url);
     })
     .catch((err) => {
       console.error("Page load error:", err);

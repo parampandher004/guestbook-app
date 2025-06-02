@@ -16,9 +16,25 @@ $guestbookController = new GuestbookController();
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? '';
 
+// Verify cookies for non-GET requests
+if ($requestMethod !== 'GET' && $requestMethod !== 'OPTIONS') {
+    $sessionId = $_COOKIE['sessionId'] ?? null;
+    $accessToken = $_COOKIE['access_token'] ?? null;
+
+    if (!$sessionId || !$accessToken) {
+        http_response_code(401);
+        echo json_encode(['success' => false, 'message' => 'Authentication required']);
+        exit();
+    }
+}
+
 switch ($requestMethod) {
     case 'GET':
-        $guestbookController->getEntries();
+        if ($action === 'my-guestbooks') {
+            $guestbookController->getUserGuestbooks();
+        } else {
+            $guestbookController->getEntries();
+        }
         break;
 
     case 'POST':
