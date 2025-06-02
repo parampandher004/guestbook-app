@@ -44,7 +44,12 @@ switch ($requestMethod) {
             echo json_encode(['success' => false, 'message' => 'Invalid request data']);
             exit();
         }
-        $guestbookController->createEntry($data);
+        
+        if ($action === 'update') {
+            $guestbookController->updateEntry($data);
+        } else {
+            $guestbookController->createEntry($data);
+        }
         break;
 
     default:

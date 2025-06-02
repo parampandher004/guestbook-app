@@ -43,16 +43,17 @@ page("/frontend/signup", () => {
 page("/frontend/guestbook/:id", async (ctx) => {
   const guestbookId = ctx.params.id;
   await loadPage("pages/guestbook-view.html");
-  const guestbook = JSON.parse(localStorage.getItem("currentGuestbook"));
+  await loadPageScript("pages/guestbook-view.html");
 
-  // Set guestbook details
+  const guestbook = JSON.parse(localStorage.getItem("currentGuestbook"));
   document.getElementById("guestbook-title").textContent = guestbook.title;
   document.getElementById(
     "guestbook-owner"
   ).textContent = `Created by: ${guestbook.creator_name}`;
 
-  // Fetch and display messages
-  fetchMessages(guestbookId);
+  // Now fetch messages after script is loaded
+  console.log(window.fetchMessages);
+  window.fetchMessages?.(guestbookId);
 });
 
 page("/frontend/about", () => {
@@ -85,6 +86,7 @@ const pageScripts = {
   "pages/guestbook.html": "guestbook.js",
   "pages/login.html": "login.js",
   "pages/signup.html": "signup.js",
+  "pages/guestbook-view.html": "guestbook-view.js",
 };
 
 function loadPageScript(url) {

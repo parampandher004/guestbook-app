@@ -22,6 +22,8 @@ fetchMyGuestbooks = async function () {
 
 updateGuestbook = async function (id, updates) {
   try {
+    console.log("Sending update:", { id, ...updates });
+
     const response = await fetch(
       "/backend/routes/guestbook.php?action=update",
       {
@@ -29,17 +31,28 @@ updateGuestbook = async function (id, updates) {
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
         body: JSON.stringify({ id, ...updates }),
       }
     );
+
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new TypeError("Response was not JSON");
+    }
+
     const data = await response.json();
+    console.log("Update response:", data);
+
     if (data.success) {
-      fetchMyGuestbooks(); // Refresh list
-      closeModal();
+      document.getElementById("editModal").style.display = "none";
+      await fetchMyGuestbooks();
+    } else {
+      console.error("Update failed:", data.message);
     }
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error updating guestbook:", error);
   }
 };
 
@@ -65,12 +78,20 @@ displayGuestbooks = function () {
 };
 
 editGuestbook = function (id) {
+  console.log("Editing guestbook:", id);
+  console.log("Available guestbooks:", Guestbooks);
   currentEditId = id;
-  const guestbook = Guestbooks.find((g) => g.id === id);
+
+  // Convert id to string for comparison since IDs from HTML might be strings
+  const guestbook = Guestbooks.find((g) => String(g.id) === String(id));
+
+  console.log("Found guestbook:", guestbook);
+
   if (!guestbook) {
     console.error("Guestbook not found:", id);
     return;
   }
+
   document.getElementById("editTitle").value = guestbook.title;
   document.getElementById("editDescription").value = guestbook.description;
   document.getElementById("editVisibility").value = guestbook.visibility;
