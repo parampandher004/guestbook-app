@@ -1,4 +1,5 @@
 const app = document.getElementById("app");
+const BASE_PATH = "/frontend";
 
 async function isLoggedIn() {
   return new Promise((resolve) => {
@@ -60,10 +61,11 @@ page("/frontend/about", () => {
 
 // Profile route - redirect to login if not logged in
 page("/frontend/profile", async () => {
+  console.log(isLoggedIn());
   if (await isLoggedIn()) {
     loadPage("pages/profile.html");
   } else {
-    page.redirect("/frontend/login"); // Redirect to login page
+    page.redirect("/frontend/login");
   }
 });
 
@@ -74,24 +76,6 @@ function loadPage(url) {
     .then((response) => response.text())
     .then((html) => {
       app.innerHTML = html;
-
-      const scripts = Array.from(app.getElementsByTagName("script"));
-      return Promise.all(
-        scripts.map((script) => {
-          const newScript = document.createElement("script");
-          if (script.src) {
-            newScript.src = script.src;
-            return new Promise((resolve) => {
-              newScript.onload = resolve;
-              document.head.appendChild(newScript);
-            });
-          } else {
-            newScript.textContent = script.textContent;
-            document.head.appendChild(newScript);
-            return Promise.resolve();
-          }
-        })
-      );
     })
     .catch((err) => {
       console.error("Page load error:", err);
@@ -103,13 +87,11 @@ function toggleDarkMode() {
   document.body.classList.toggle("dark-mode");
   const darkModeStatus = document.body.classList.contains("dark-mode");
   localStorage.setItem("darkMode", darkModeStatus); // Persist dark mode setting
-  updateIcon(darkModeStatus);
 }
 
 window.onload = function () {
   const darkMode = localStorage.getItem("darkMode") === "true";
   if (darkMode) {
     document.body.classList.add("dark-mode");
-    updateIcon(true);
   }
 };
