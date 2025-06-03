@@ -14,6 +14,11 @@ if (isset($_GET['action'])) {
         exit();
     }
     
+    if ($action === 'logout') {
+        $auth->logout();
+        exit();
+    }
+    
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch($action) {
             case 'login':
@@ -24,6 +29,9 @@ if (isset($_GET['action'])) {
                 break;
             case 'verify':
                 $auth->verify();
+                break;
+            case 'logout':
+                $auth->logout();
                 break;
         }
     }

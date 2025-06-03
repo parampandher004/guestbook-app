@@ -110,5 +110,22 @@ async function updateField(field, value) {
   }
 }
 
+async function handleLogout() {
+  try {
+    const response = await fetch("/backend/routes/auth.php?action=logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    if (response.ok) {
+      window.location.href = "/frontend/login";
+    }
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+}
+
+document.getElementById("logoutBtn")?.addEventListener("click", handleLogout);
+
 // Initialize only when DOM is ready
 fetchUserProfile();
