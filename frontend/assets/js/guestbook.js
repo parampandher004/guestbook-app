@@ -113,19 +113,31 @@ displayGuestbooks = function () {
   container.innerHTML = window.Guestbooks.map(
     (gb) => `
         <div class="guestbook-item">
-            <div class="guestbook-content" onclick="window.location.href='/frontend/guestbook/${gb.id}'">
+            <div class="guestbook-content" onclick="handleGuestbookClick('${
+              gb.id
+            }', '${encodeURIComponent(JSON.stringify(gb))}')">
                 <h3>${gb.title}</h3>
                 <p>${gb.description}</p>
                 <span class="badge ${gb.visibility}">${gb.visibility}</span>
                 <span class="badge ${gb.status}">${gb.status}</span>
             </div>
             <div class="guestbook-actions">
-                <button onclick="event.stopPropagation(); editGuestbook('${gb.id}')">Edit</button>
-                <button onclick="event.stopPropagation(); deleteGuestbook('${gb.id}')" class="delete-btn">Delete</button>
+                <button onclick="event.stopPropagation(); editGuestbook('${
+                  gb.id
+                }')">Edit</button>
+                <button onclick="event.stopPropagation(); deleteGuestbook('${
+                  gb.id
+                }')" class="delete-btn">Delete</button>
             </div>
         </div>
     `
   ).join("");
+};
+
+handleGuestbookClick = function (id, gbString) {
+  const guestbook = JSON.parse(decodeURIComponent(gbString));
+  localStorage.setItem("currentGuestbook", JSON.stringify(guestbook));
+  window.location.href = `/frontend/guestbook/${id}`;
 };
 
 editGuestbook = function (id) {

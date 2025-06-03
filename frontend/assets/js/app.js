@@ -48,8 +48,8 @@ page("/frontend/guestbook/:id", async (ctx) => {
   const guestbook = JSON.parse(localStorage.getItem("currentGuestbook"));
   document.getElementById("guestbook-title").textContent = guestbook.title;
   document.getElementById(
-    "guestbook-owner"
-  ).textContent = `Created by: ${guestbook.creator_name}`;
+    "guestbook-description"
+  ).textContent = `Description: ${guestbook.description}`;
 
   // Now fetch messages after script is loaded
   console.log(window.fetchMessages);
