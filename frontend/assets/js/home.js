@@ -1,8 +1,18 @@
-const searchInput = document.getElementById("searchInput");
-if (searchInput) {
-  searchInput.addEventListener("input", function () {
-    searchEntries(this.value);
-  });
+if (!window.guestbookEntries) {
+  window.guestbookEntries = [];
+}
+
+function initializeSearch() {
+  if (window.searchInitialized) return;
+
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", function () {
+      searchEntries(this.value);
+    });
+    window.searchInitialized = true;
+    console.log("Search initialized");
+  }
 }
 
 async function fetchGuestbooks() {
@@ -16,8 +26,9 @@ async function fetchGuestbooks() {
     );
     const data = await response.json();
     if (data.success) {
-      fetchGuestbooks = data.entries;
+      window.guestbookEntries = data.entries;
       showGuestbookEntries();
+      initializeSearch();
     } else {
       console.error("Failed to fetch guestbooks:", data.message);
     }
@@ -27,7 +38,7 @@ async function fetchGuestbooks() {
 }
 
 function searchEntries(query) {
-  const filtered = fetchGuestbooks.filter(
+  const filtered = window.guestbookEntries.filter(
     (entry) =>
       entry.title.toLowerCase().includes(query.toLowerCase()) ||
       entry.description.toLowerCase().includes(query.toLowerCase())
@@ -35,7 +46,7 @@ function searchEntries(query) {
   showGuestbookEntries(filtered);
 }
 
-function showGuestbookEntries(entriesToShow = fetchGuestbooks) {
+function showGuestbookEntries(entriesToShow = window.guestbookEntries) {
   console.log("Showing guestbook entries");
   const container = document.getElementById("guestbookentries");
   if (!container) {

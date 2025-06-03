@@ -55,8 +55,9 @@
             $result = $stmt->get_result();
 
             if ($user = $result->fetch_assoc()) {
-                if (password_verify($password, $user['password_hash'])) {
+                if (password_verify($password, $user['password_hash'])) {  // Changed from password to password_hash
                     $session = $this->tokenManager->createSession($user['id']);
+                    $refreshToken = $this->tokenManager->generateRefreshToken($user['id']);
                     
                     setcookie('sessionId', $session['sessionId'], [
                         'expires' => strtotime($session['expiresAt']),
@@ -68,6 +69,14 @@
                     
                     setcookie('access_token', $session['accessToken'], [
                         'expires' => strtotime($session['expiresAt']),
+                        'path' => '/',
+                        'httponly' => true,
+                        'secure' => false,
+                        'samesite' => 'Lax'
+                    ]);
+
+                    setcookie('refresh_token', $refreshToken['token'], [
+                        'expires' => strtotime($refreshToken['expiresAt']),
                         'path' => '/',
                         'httponly' => true,
                         'secure' => false,
@@ -205,8 +214,9 @@
                     if ($insert->execute()) {
                         $userId = $insert->insert_id;
                         
-                        // Create session for new user
+                        // Create session and refresh token for new user
                         $session = $this->tokenManager->createSession($userId);
+                        $refreshToken = $this->tokenManager->generateRefreshToken($userId);
                         
                         setcookie('sessionId', $session['sessionId'], [
                             'expires' => strtotime($session['expiresAt']),
@@ -218,6 +228,14 @@
                         
                         setcookie('access_token', $session['accessToken'], [
                             'expires' => strtotime($session['expiresAt']),
+                            'path' => '/',
+                            'httponly' => true,
+                            'secure' => false,
+                            'samesite' => 'Lax'
+                        ]);
+
+                        setcookie('refresh_token', $refreshToken['token'], [
+                            'expires' => strtotime($refreshToken['expiresAt']),
                             'path' => '/',
                             'httponly' => true,
                             'secure' => false,
@@ -302,6 +320,7 @@
             
             setcookie('sessionId', '', time() - 3600, '/');
             setcookie('access_token', '', time() - 3600, '/');
+            setcookie('refresh_token', '', time() - 3600, '/');
             echo json_encode(['success' => true]);
         }
 
@@ -310,31 +329,51 @@
             
             $sessionId = $_COOKIE['sessionId'] ?? null;
             $accessToken = $_COOKIE['access_token'] ?? null;
+            $refreshToken = $_COOKIE['refresh_token'] ?? null;
             
             $this->debug_log("Checking auth with sessionId: $sessionId");
-            $this->debug_log("Access token: $accessToken");
             
             if (!$sessionId || !$accessToken) {
                 echo json_encode([
                     'authenticated' => false, 
-                    'reason' => 'Missing tokens',
-                    'debug' => [
-                        'hasSessionId' => !empty($sessionId),
-                        'hasAccessToken' => !empty($accessToken)
-                    ]
+                    'reason' => 'Missing tokens'
                 ]);
                 exit();
             }
             
+            // First try with access token
             $userId = $this->tokenManager->verifySession($sessionId, $accessToken);
-            $this->debug_log("Verification result - userId: " . ($userId ?? 'null'));
+            
+            // If access token fails but we have refresh token
+            if (!$userId && $refreshToken) {
+                $this->debug_log("Access token expired, trying refresh token");
+                $userId = $this->tokenManager->verifyRefreshToken($refreshToken);
+                
+                if ($userId) {
+                    // Generate new access token
+                    $newSession = $this->tokenManager->createSession($userId);
+                    
+                    setcookie('sessionId', $newSession['sessionId'], [
+                        'expires' => strtotime($newSession['expiresAt']),
+                        'path' => '/',
+                        'httponly' => true,
+                        'secure' => false,
+                        'samesite' => 'Lax'
+                    ]);
+                    
+                    setcookie('access_token', $newSession['accessToken'], [
+                        'expires' => strtotime($newSession['expiresAt']),
+                        'path' => '/',
+                        'httponly' => true,
+                        'secure' => false,
+                        'samesite' => 'Lax'
+                    ]);
+                }
+            }
             
             echo json_encode([
                 'authenticated' => !empty($userId),
-                'debug' => [
-                    'userId' => $userId,
-                    'sessionId' => $sessionId
-                ]
+                'tokenRefreshed' => ($userId && !empty($newSession))
             ]);
             exit();
         }

@@ -1,5 +1,5 @@
-let Guestbooks = []; // Move to outer scope
-let currentEditId = null;
+if (!window.Guestbooks) window.Guestbooks = [];
+if (!window.currentEditId) window.currentEditId = null;
 
 fetchMyGuestbooks = async function () {
   try {
@@ -12,7 +12,7 @@ fetchMyGuestbooks = async function () {
     const data = await response.json();
     console.log("My Guestbooks Response:", data);
     if (data.success) {
-      Guestbooks = data.entries; // Store the guestbooks
+      window.Guestbooks = data.entries; // Store the guestbooks
       this.displayGuestbooks();
     }
   } catch (error) {
@@ -64,7 +64,7 @@ displayGuestbooks = function () {
     return;
   }
 
-  container.innerHTML = Guestbooks.map(
+  container.innerHTML = window.Guestbooks.map(
     (gb) => `
                 <div class="guestbook-item">
                     <h3>${gb.title}</h3>
@@ -79,11 +79,10 @@ displayGuestbooks = function () {
 
 editGuestbook = function (id) {
   console.log("Editing guestbook:", id);
-  console.log("Available guestbooks:", Guestbooks);
-  currentEditId = id;
+  window.currentEditId = id;
 
   // Convert id to string for comparison since IDs from HTML might be strings
-  const guestbook = Guestbooks.find((g) => String(g.id) === String(id));
+  const guestbook = window.Guestbooks.find((g) => String(g.id) === String(id));
 
   console.log("Found guestbook:", guestbook);
 

@@ -23,7 +23,7 @@ class TokenManager {
         
         return [
             'token' => $token,
-            'expires' => $expires
+            'expiresAt' => $expires
         ];
     }
     
