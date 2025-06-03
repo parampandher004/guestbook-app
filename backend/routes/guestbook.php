@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: http://localhost:5173');
 header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE');
 header('Access-Control-Allow-Headers: Content-Type');
 
 require_once __DIR__ . '/../controllers/GuestbookController.php';
@@ -52,6 +52,16 @@ switch ($requestMethod) {
         }
         break;
 
+    case 'DELETE':
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Guestbook ID is required']);
+            exit();
+        }
+        $guestbookController->deleteEntry($id);
+        break;
+    
     default:
         http_response_code(405);
         echo json_encode(['success' => false, 'message' => 'Method not allowed']);

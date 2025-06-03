@@ -30,6 +30,31 @@
           </form>
         </div>
       </div>
+
+      <!-- Create Modal -->
+      <div id="createModal" class="modal" style="display: none">
+        <div class="modal-content">
+          <h3>Create New Guestbook</h3>
+          <form id="createForm">
+            <input type="text" id="createTitle" placeholder="Title" required />
+            <textarea
+              id="createDescription"
+              placeholder="Description"
+            ></textarea>
+            <select id="createVisibility">
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+            </select>
+            <button type="submit">Create</button>
+            <button
+              type="button"
+              onclick="document.getElementById('createModal').style.display='none'"
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
     <script src="../assets/js/guestbook.js"></script>
   </body>

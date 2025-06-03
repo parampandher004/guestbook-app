@@ -66,22 +66,16 @@ class GuestbookController {
         $title = sanitizeInput($data['title'] ?? '');
         $description = sanitizeInput($data['description'] ?? '');
         $visibility = sanitizeInput($data['visibility'] ?? 'public');
-        $id = uniqid();
 
-        if (!$title) {
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Title is required']);
-            exit();
-        }
-
-        $stmt = $conn->prepare("INSERT INTO guestbooks (id, creator_id, title, description, visibility) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sisss", $id, $userId, $title, $description, $visibility);
+        $stmt = $conn->prepare("INSERT INTO guestbooks (creator_id, title, description, visibility) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("isss", $userId, $title, $description, $visibility);
 
         if ($stmt->execute()) {
+            $newId = $conn->insert_id; // Get the auto-generated ID
             echo json_encode([
                 'success' => true,
                 'message' => 'Guestbook created successfully',
-                'id' => $id
+                'id' => $newId
             ]);
         } else {
             http_response_code(500);
@@ -168,6 +162,42 @@ class GuestbookController {
         } else {
             http_response_code(500);
             echo json_encode(['success' => false, 'message' => 'Error updating guestbook']);
+        }
+        exit();
+    }
+
+    public function deleteEntry($id) {
+        global $conn;
+        header('Content-Type: application/json');
+
+        $userId = $this->getUserIdFromToken();
+        if (!$userId) {
+            http_response_code(401);
+            echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+            exit();
+        }
+
+        // Verify ownership
+        $checkStmt = $conn->prepare("SELECT creator_id FROM guestbooks WHERE id = ?");
+        $checkStmt->bind_param("i", $id);
+        $checkStmt->execute();
+        $result = $checkStmt->get_result()->fetch_assoc();
+
+        if (!$result || $result['creator_id'] !== $userId) {
+            http_response_code(403);
+            echo json_encode(['success' => false, 'message' => 'Not authorized to delete this guestbook']);
+            exit();
+        }
+
+        // Soft delete by updating status
+        $stmt = $conn->prepare("UPDATE guestbooks SET status = 'deleted' WHERE id = ? AND creator_id = ?");
+        $stmt->bind_param("ii", $id, $userId);
+
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true, 'message' => 'Guestbook deleted successfully']);
+        } else {
+            http_response_code(500);
+            echo json_encode(['success' => false, 'message' => 'Error deleting guestbook']);
         }
         exit();
     }
