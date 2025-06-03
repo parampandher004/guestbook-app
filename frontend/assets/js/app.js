@@ -87,6 +87,7 @@ const pageScripts = {
   "pages/login.html": "login.js",
   "pages/signup.html": "signup.js",
   "pages/guestbook-view.html": "guestbook-view.js",
+  "pages/profile.html": "profile.js",
 };
 
 function loadPageScript(url) {
